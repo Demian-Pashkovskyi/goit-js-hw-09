@@ -2,18 +2,6 @@ import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const form = document.querySelector('.form');
-// const delay = document.querySelector('[name="delay"]');
-// const step = document.querySelector('[name="step"]');
-// const amount = document.querySelector('[name="amount"]');
-// const submitBtn = document.querySelector('button[type="submit"]');
-
-// createPromise(position, delay)
-//   .then(({ position, delay }) => {
-//     console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-//   })
-//   .catch(({ position, delay }) => {
-//     console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-//   });
 
 function createPromise(position, delay) {
 	return new Promise ((resolve, reject) => {
@@ -23,30 +11,26 @@ function createPromise(position, delay) {
 				resolve({ position, delay });
 			}
 				else {
-				reject({ position, delay });
-			  }
+					reject({ position, delay });
+				}
 		}, delay);
 	});
 };
 
 form.addEventListener('submit', (event) => {
 	event.preventDefault();
-
 	const data = new FormData(form);
 	const delay = parseInt(data.get('delay'));
 	const step = parseInt(data.get('step'));
 	const amount = parseInt(data.get('amount'));
-	console.log(delay);
-	console.log(step);
-	console.log(amount);
 
 	for (let i = 0; i < amount; i++) {
 		createPromise(i, delay + step * i)
 		.then(({ position, delay }) => {
-			Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, { timeout: 5000 });
+			Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, { timeout: 4000 });
 		})
 		.catch(({ position, delay }) => {
-			Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, { timeout: 5000 });
+			Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, { timeout: 4000 });
 		});
 	}
 });
