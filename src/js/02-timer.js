@@ -40,11 +40,13 @@ function checkDate(date) {
 
 	const currentTime = new Date();
 	if (date < currentTime) {
+		// refs.startBtn.removeAttribute('disabled');
 		Notiflix.Report.failure("Please choose a date in the future");
-      return;
-	}
+      // return;
+	} else {
 	startBtn.disabled = false;
 	selectedTime = date.getTime();
+	}
 }
 
 const options = {
@@ -61,11 +63,12 @@ flatpickr(inputDate, options);
 
 startBtn.addEventListener('click', () => {
 	const timerId = setInterval(() => {
-		const currentTime = Date.now();
+		const currentTime = new Date().getTime();
 		const deltaTime = selectedTime - currentTime;
 		const componentsTimer = convertMs(deltaTime);
-		if (deltaTime < 1) {
+		if (deltaTime < 0) {
 			clearInterval(timerId);
+			startBtn.disabled = true;
 			return;
 		}
 		const updateComponentsTimer = convertMs(deltaTime);
