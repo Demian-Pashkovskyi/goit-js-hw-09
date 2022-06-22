@@ -25,12 +25,13 @@ form.addEventListener('submit', (event) => {
 	const amount = parseInt(data.get('amount'));
 
 	for (let i = 1; i < amount; i++) {
-		createPromise(i, delay + step * i)
+		createPromise(i, delay)
 		.then(({ position, delay }) => {
 			Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, { timeout: 4000 });
 		})
 		.catch(({ position, delay }) => {
 			Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, { timeout: 4000 });
+			delay += step * i
 		});
 	}
 });
